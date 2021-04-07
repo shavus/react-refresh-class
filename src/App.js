@@ -11,25 +11,29 @@ class App extends Component {
         ]
     }
 
-    switchNameHandler = () => {
+    errorRepairHandler = (newName, newAge) => {
         //Don't mutate state - this.state.persons[1].name = 'Bree';
         this.setState({
             persons: [
-                {'name': 'Scott', 'age': 32},
-                {'name': 'Bree', 'age': 32},
+                {'name': newName, 'age': newAge},
+                {'name': 'Breanne', 'age': newAge},
             ]
         })
     }
 
+    /*
+     * Arrow notation can be ineffecient, better to use .bind(this) when possible.
+     */
     render() {
         return (
             <div className="App">
                 <h1>Hello, I'm a react app.</h1>
                 <p>This is really working!</p>
-                <button onClick={this.switchNameHandler}>Fix Errors</button>
+                <button onClick={() => this.errorRepairHandler("Scott", 32)}>Fix Errors</button>
                 <Person
                     name={this.state.persons[0].name}
                     age={this.state.persons[0].age}
+                    clickAction={this.errorRepairHandler.bind(this, "Shavus", 31)}
                 />
                 <Person
                     name={this.state.persons[1].name}
