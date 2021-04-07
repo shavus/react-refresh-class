@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import './App.css';
+
 import Person from "./Person/Person";
 
 class App extends Component {
@@ -21,24 +23,37 @@ class App extends Component {
         })
     }
 
+    nameChangedHandler = (event) => {
+        this.setState({
+            persons: [
+                {'name': "Scott", 'age': 32},
+                {'name': event.target.value, 'age': 32},
+            ]
+        })
+    }
+
     /*
      * Arrow notation can be ineffecient, better to use .bind(this) when possible.
      */
     render() {
+
+        const style = {
+            backgroundColor: 'white',
+            font: 'inherit',
+            border: '1px solid blue',
+            padding: '8px',
+            cursor: 'pointer'
+        };
+
         return (
             <div className="App">
                 <h1>Hello, I'm a react app.</h1>
                 <p>This is really working!</p>
-                <button onClick={() => this.errorRepairHandler("Scott", 32)}>Fix Errors</button>
-                <Person
-                    name={this.state.persons[0].name}
-                    age={this.state.persons[0].age}
-                    clickAction={this.errorRepairHandler.bind(this, "Shavus", 31)}
-                />
-                <Person
-                    name={this.state.persons[1].name}
-                    age={this.state.persons[1].age}
-                />
+                <button style={style} onClick={() => this.errorRepairHandler("Scott", 32)}>
+                    Fix Errors
+                </button>
+                <Person name={this.state.persons[0].name} age={this.state.persons[0].age} clickAction={this.errorRepairHandler.bind(this, "Shavus", 31)}/>
+                <Person name={this.state.persons[1].name} age={this.state.persons[1].age} onNameChange={this.nameChangedHandler}/>
             </div>
         );
     }
