@@ -8,27 +8,36 @@ class App extends Component {
 
     state = {
         persons: [
-            {'name': 'Soctt', 'age': 34},
-            {'name': 'Breanna', 'age': 33},
-        ]
+            {'id': 1, 'name': 'Scott', 'age': 32},
+            {'id': 2, 'name': 'Breanne', 'age': 32},
+        ],
+        showPersons: false
     }
 
-    errorRepairHandler = (newName, newAge) => {
-        //Don't mutate state - this.state.persons[1].name = 'Bree';
+    nameChangedHandler = (event, id) => {
+        const modifiedPersonIndex = this.state.persons.findIndex(person => person.id === id);
+        const modifiedPerson = {...this.state.persons[modifiedPersonIndex]};
+        modifiedPerson.name = event.target.value;
+
+        const updatedPersons = [...this.state.persons];
+        updatedPersons[modifiedPersonIndex] = modifiedPerson;
+
         this.setState({
-            persons: [
-                {'name': newName, 'age': newAge},
-                {'name': 'Breanne', 'age': newAge},
-            ]
+            persons: updatedPersons,
         })
     }
 
-    nameChangedHandler = (event) => {
+    togglePersonsHandler = () => {
         this.setState({
-            persons: [
-                {'name': "Scott", 'age': 32},
-                {'name': event.target.value, 'age': 32},
-            ]
+            showPersons: !this.state.showPersons,
+        })
+    }
+
+    deletePersonHandler = (personIndex) => {
+        const allUsers = [...this.state.persons];
+        allUsers.splice(personIndex, 1);
+        this.setState({
+            persons: allUsers,
         })
     }
 
@@ -45,15 +54,32 @@ class App extends Component {
             cursor: 'pointer'
         };
 
+        let users = null;
+
+        if (this.state.showPersons)
+        {
+            users = (
+                <div>
+                    {
+                        this.state.persons.map((person, index) =>
+                            <Person className="Person"
+                                key={'person-' + person.id}
+                                name={person.name}
+                                age={person.age}
+                                onNameChange={(event) => this.nameChangedHandler(event, person.id)}
+                                onDelete={() => this.deletePersonHandler(index)}
+                            />)
+                    }
+                </div>
+            );
+        }
+
         return (
             <div className="App">
-                <h1>Hello, I'm a react app.</h1>
-                <p>This is really working!</p>
-                <button style={style} onClick={() => this.errorRepairHandler("Scott", 32)}>
-                    Fix Errors
+                <button style={style} onClick={this.togglePersonsHandler}>
+                    Toggle User Data
                 </button>
-                <Person name={this.state.persons[0].name} age={this.state.persons[0].age} clickAction={this.errorRepairHandler.bind(this, "Shavus", 31)}/>
-                <Person name={this.state.persons[1].name} age={this.state.persons[1].age} onNameChange={this.nameChangedHandler}/>
+                {users}
             </div>
         );
     }

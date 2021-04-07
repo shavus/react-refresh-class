@@ -10,8 +10,9 @@ const person = (props) => {
      */
     return (
         <div className='Person'>
-            <p onClick={props.clickAction}>{props.name} is {props.age} years old!</p>
+            <p>{props.name} is {props.age} years old!</p>
             <input type="text" onChange={props.onNameChange} value={props.name}/>
+            <p onClick={props.onDelete}>Click here to delete person</p>
         </div>
     );
 };
