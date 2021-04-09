@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+
 import Person from './Person/Person'
 
 class PersonList extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[PersonList.js] shouldComponentUpdate');
-        return nextProps.persons !== this.props.persons;
+        return true;
     }
 
     componentDidUpdate() {

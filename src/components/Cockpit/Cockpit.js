@@ -1,16 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 
 import classes from './Cockpit.css';
+
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
 
     const toggleBtnRef = useRef(null);
-    
+    const authContext = useContext(AuthContext);
+
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
         toggleBtnRef.current.click();
     }, []);
-    
+
     useEffect(() => {
         console.log('[Cockpit.js] 2nd useEffect');
     });
@@ -29,12 +32,18 @@ const cockpit = (props) => {
     }
 
     return (
+
         <div className={classes.Cockpit}>
             <h1>{props.title}</h1>
             <button ref={toggleBtnRef} className={buttonClasses} onClick={props.btnClicked}>
                 Toggle User Data
             </button>
+            {/* <AuthContext.Consumer>
+                { context => <button onClick={context.authenticate}>Toggle Auth</button> }
+            </AuthContext.Consumer> */}
+            <button onClick={authContext.authenticate}>Toggle Auth</button>
         </div>
+
     )
 };
 

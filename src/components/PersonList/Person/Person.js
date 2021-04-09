@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import classes from './Person.css';
 
+import AuthContext from '../../../context/auth-context';
 import withClass from '../../../hoc/withClass';
 
 //can extend PureComponent if want effective shouldComponentUpdate when checking on a change on any prop
@@ -12,6 +13,9 @@ class Person extends Component {
         super(props);
         this.inputElementRef = React.createRef();
     }
+
+    //only useable in class components.  left side must match exactly.
+    static contextType = AuthContext;
 
     componentDidMount() {
         // this.inputElement.focus();
@@ -37,10 +41,15 @@ class Person extends Component {
     render() {
         console.log('[Person.js] rendering...');
         return (
+
             <Fragment>
+                {/* <AuthContext.Consumer>
+                    { context => context.authenticated ? <p>Authenticated</p> : <p>Please Login</p> }
+                </AuthContext.Consumer> */}
+                { this.context.authenticated ? <p>Authenticated</p> : <p>Please Login</p> }
                 <p>
                     {this.props.name} is {this.props.age} years old!
-                </p>
+                        </p>
                 <input
                     type='text'
                     // ref={(inputEl) => {this.inputElement = inputEl}}
@@ -50,8 +59,9 @@ class Person extends Component {
                 />
                 <p onClick={this.props.onDelete}>
                     Click here to delete person
-                </p>
+                        </p>
             </Fragment>
+
         );
     }
 };

@@ -4,6 +4,7 @@ import classes from './App.css';
 
 import Cockpit from '../components/Cockpit/Cockpit';
 import PersonList from '../components/PersonList/PersonList'
+import AuthContext from '../context/auth-context';
 import Aux from '../hoc/Aux';
 import withClass from '../hoc/withClass';
 
@@ -23,6 +24,7 @@ class App extends Component {
         ],
         showPersons: false,
         showCockpit: true,
+        loggedIn: false,
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -84,6 +86,14 @@ class App extends Component {
         })
     }
 
+    loginHandler = () => {
+        this.setState((prevState, props) => {
+            return ({
+                loggedIn: !prevState.loggedIn,
+            })
+        })
+    }
+
     render() {
         console.log('[App.js] render');
         let users = '';
@@ -94,6 +104,7 @@ class App extends Component {
                     persons={this.state.persons}
                     deleted={this.deletePersonHandler}
                     renamed={this.nameChangedHandler}
+                    isAuthed={this.state.loggedIn}
                 />
             );
         }
@@ -114,8 +125,13 @@ class App extends Component {
             //Aux can be replaced with React.Fragment
             <Aux>
                 <button onClick={this.toggleShowCockpit} >Toggle Cockpit</button>
-                {cockpit}
-                {users}
+                <AuthContext.Provider value={{
+                    authenticated: this.state.loggedIn,
+                    authenticate: this.loginHandler,
+                }}>
+                    {cockpit}
+                    {users}
+                </AuthContext.Provider>
             </Aux>
         );
     }
