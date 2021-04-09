@@ -3,19 +3,9 @@ import Person from './Person/Person'
 
 class PersonList extends Component {
 
-    static getDerivedStateFromProps(props, state) {
-        console.log('[PersonList.js] getDerivedStateFromProps');
-        return state;
-    }
-
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[PersonList.js] shouldComponentUpdate');
         return nextProps.persons !== this.props.persons;
-    }
-
-    getSnapshotBeforeUpdate(previousProps, previousState) {
-        console.log['[PersonList.js] getSnapshotBeforeUpdate'];
-        return {message: 'Snapshot!'}
     }
 
     componentDidUpdate() {

@@ -57,15 +57,23 @@ class App extends Component {
     }
 
     toggleShowCockpit = () => {
-        this.setState({
-            showCockpit: !this.state.showCockpit,
+        this.setState((prevState, props) => {
+            return (
+                {
+                    showCockpit: !prevState.showCockpit,
+                }
+            );
         });
     }
 
     togglePersonsHandler = () => {
-        this.setState({
-            showPersons: !this.state.showPersons,
-        })
+        this.setState((prevState, props) => {
+            return (
+                {
+                    showPersons: !prevState.showPersons,
+                }
+            );
+        });
     }
 
     deletePersonHandler = (personIndex) => {

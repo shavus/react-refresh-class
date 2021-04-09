@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import PropTypes from 'prop-types';
 
 import classes from './Person.css';
 
@@ -7,21 +8,20 @@ import withClass from '../../../hoc/withClass';
 //can extend PureComponent if want effective shouldComponentUpdate when checking on a change on any prop
 class Person extends Component {
 
-    //can take props and modify state.
-    static getDerivedStateFromProps(props, state) {
-        console.log('[Person.js] getDerivedStateFromProps');
-        return state;
+    constructor(props) {
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+
+    componentDidMount() {
+        // this.inputElement.focus();
+        this.inputElementRef.current.focus();
     }
 
     //determines whether component should update, can be used to optimize
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[Person.js] shouldComponentUpdate');
         return true;
-    }
-
-    getSnapshotBeforeUpdate(previousProps, previousState) {
-        console.log['[Person.js] getSnapshotBeforeUpdate'];
-        return null;
     }
 
     //fires after component updates.
@@ -36,33 +36,31 @@ class Person extends Component {
 
     render() {
         console.log('[Person.js] rendering...');
-        // This is to show multiple items can be returned from a render as a list, but it's often cumbersome.
-        //  return [
-        //     // <div className='Person' style={style}>
-        //      <p key='i1' >{this.props.name} is {this.props.age} years old!</p>,
-        //     <input
-        //         key='i2'
-        //         type="text"
-        //         onChange={this.props.onNameChange}
-        //         value={this.props.name}
-        //     />,
-        //     <p
-        //         key='i3'
-        //         onClick={this.props.onDelete}
-        //     >
-        //         Click here to delete person
-        //     </p>
-        // ];
         return (
-            // <Aux>
             <Fragment>
-                <p>{this.props.name} is {this.props.age} years old!</p>
-                <input type="text" onChange={this.props.onNameChange} value={this.props.name} />
-                <p onClick={this.props.onDelete}>Click here to delete person</p>
+                <p>
+                    {this.props.name} is {this.props.age} years old!
+                </p>
+                <input
+                    type='text'
+                    // ref={(inputEl) => {this.inputElement = inputEl}}
+                    ref={this.inputElementRef}
+                    onChange={this.props.onNameChange}
+                    value={this.props.name}
+                />
+                <p onClick={this.props.onDelete}>
+                    Click here to delete person
+                </p>
             </Fragment>
-            // </Aux>
         );
     }
+};
+
+Person.propTypes = {
+    name: PropTypes.string,
+    age: PropTypes.number,
+    onNameChange: PropTypes.func,
+    onDelete: PropTypes.func,
 };
 
 export default withClass(Person, classes.Person);

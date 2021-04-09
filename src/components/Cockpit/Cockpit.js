@@ -1,27 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import classes from './Cockpit.css';
 
 const cockpit = (props) => {
 
-    //will only update when props.persons is updated
-    // useEffect(() => {
-    //     console.log('[Cockpit.js] useEffect');
-    //     setTimeout(() => {
-    //         alert('saved data to cloud'); 
-    //     }, 1000);
-    // }, [props.persons]);
-
-    //will only update when component renders the first time.  Array must be passed empty.
+    const toggleBtnRef = useRef(null);
+    
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
-        // const timer =  setTimeout(() => {
-        //     alert('saved data to cloud');
-        // }, 1000);
-        // return () => {
-        //     clearTimeout(timer); 
-        //     console.log('[Cockpit.js] cleanup work in useEffect')
-        // }
+        toggleBtnRef.current.click();
     }, []);
     
     useEffect(() => {
@@ -44,7 +31,7 @@ const cockpit = (props) => {
     return (
         <div className={classes.Cockpit}>
             <h1>{props.title}</h1>
-            <button className={buttonClasses} onClick={props.btnClicked}>
+            <button ref={toggleBtnRef} className={buttonClasses} onClick={props.btnClicked}>
                 Toggle User Data
             </button>
         </div>
