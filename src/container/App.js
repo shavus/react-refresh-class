@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+
 import classes from './App.css';
-import PersonList from '../components/PersonList/PersonList'
+
 import Cockpit from '../components/Cockpit/Cockpit';
+import PersonList from '../components/PersonList/PersonList'
+import Aux from '../hoc/Aux';
+import withClass from '../hoc/withClass';
 
 class App extends Component {
 
@@ -99,13 +103,14 @@ class App extends Component {
         }
 
         return (
-            <div className={classes.App}>
+            //Aux can be replaced with React.Fragment
+            <Aux>
                 <button onClick={this.toggleShowCockpit} >Toggle Cockpit</button>
                 {cockpit}
                 {users}
-            </div>
+            </Aux>
         );
     }
 }
 
-export default App;
+export default withClass(App, classes.App);
