@@ -15,20 +15,24 @@ const cockpit = (props) => {
     //will only update when component renders the first time.  Array must be passed empty.
     useEffect(() => {
         console.log('[Cockpit.js] useEffect');
-        const timer =  setTimeout(() => {
-            alert('saved data to cloud');
-        }, 1000);
-        return () => {
-            clearTimeout(timer);
-            console.log('[Cockpit.js] cleanup work in useEffect')
-        }
+        // const timer =  setTimeout(() => {
+        //     alert('saved data to cloud');
+        // }, 1000);
+        // return () => {
+        //     clearTimeout(timer); 
+        //     console.log('[Cockpit.js] cleanup work in useEffect')
+        // }
     }, []);
+    
+    useEffect(() => {
+        console.log('[Cockpit.js] 2nd useEffect');
+    });
 
     const assignedClasses = [];
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         assignedClasses.push("red");
     }
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         assignedClasses.push("bold");
     }
 
@@ -47,4 +51,5 @@ const cockpit = (props) => {
     )
 };
 
-export default cockpit;
+//React.memmo wrapper means cockpit will only update when props change.
+export default React.memo(cockpit);

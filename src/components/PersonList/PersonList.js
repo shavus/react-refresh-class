@@ -10,11 +10,12 @@ class PersonList extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[PersonList.js] shouldComponentUpdate');
-        return true;
+        return nextProps.persons !== this.props.persons;
     }
 
     getSnapshotBeforeUpdate(previousProps, previousState) {
-        console.log['[PersonList.js] getSnapshotBeforeUpdate'] 
+        console.log['[PersonList.js] getSnapshotBeforeUpdate'];
+        return {message: 'Snapshot!'}
     }
 
     componentDidUpdate() {

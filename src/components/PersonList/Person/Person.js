@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import classses from './Person.css'
 
+//can extend PureComponent if want effective shouldComponentUpdate when checking on a change on any prop
 class Person extends Component {
 
     //can take props and modify state.
@@ -17,7 +18,8 @@ class Person extends Component {
     }
 
     getSnapshotBeforeUpdate(previousProps, previousState) {
-        console.log['[Person.js] getSnapshotBeforeUpdate'] 
+        console.log['[Person.js] getSnapshotBeforeUpdate'];
+        return null;
     }
 
     //fires after component updates.
