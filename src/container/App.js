@@ -9,7 +9,7 @@ class App extends Component {
         super(props);
         console.log('[App.js] constructor.');
     }
-    
+
     //This can be done in constructor as this.state =... however, this is the more modern approach.
     state = {
         persons: [
@@ -17,7 +17,8 @@ class App extends Component {
             { 'id': 2, 'name': 'Breanne', 'age': 32 },
             { 'id': 3, 'name': 'Doug', 'age': 29 },
         ],
-        showPersons: false
+        showPersons: false,
+        showCockpit: true,
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -33,7 +34,7 @@ class App extends Component {
         console.log('[App.js] shouldComponentUpdate');
         return true;
     }
-    
+
     componentDidUpdate() {
         console.log('[App.js] componentDidUpdate');
     }
@@ -49,6 +50,12 @@ class App extends Component {
         this.setState({
             persons: updatedPersons,
         })
+    }
+
+    toggleShowCockpit = () => {
+        this.setState({
+            showCockpit: !this.state.showCockpit,
+        });
     }
 
     togglePersonsHandler = () => {
@@ -67,7 +74,7 @@ class App extends Component {
 
     render() {
         console.log('[App.js] render');
-        let users = null;
+        let users = '';
 
         if (this.state.showPersons) {
             users = (
@@ -79,14 +86,22 @@ class App extends Component {
             );
         }
 
-        return (
-            <div className={classes.App}>
+        let cockpit = '';
+        if (this.state.showCockpit) {
+            cockpit = (
                 <Cockpit
                     title={this.props.appTitle}
                     persons={this.state.persons}
                     personsDisplayed={this.state.showPersons}
                     btnClicked={this.togglePersonsHandler}
                 />
+            )
+        }
+
+        return (
+            <div className={classes.App}>
+                <button onClick={this.toggleShowCockpit} >Toggle Cockpit</button>
+                {cockpit}
                 {users}
             </div>
         );
